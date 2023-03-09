@@ -5,19 +5,24 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
 @Entity
-@Table(name="FIJOS")
+@Table(name="FIJOS", catalog = "empresa_anotaciones")
 public class Fijos extends Empleados implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	//Clave primaria y foranea (dni del empleado)
 	private String dni;
+	private Empleados empleados;
 	private int salarioBase, trienios;
 	private float sueldo = (salarioBase+trienios)-(salarioBase+trienios)*porcentaRetencion;
 	
@@ -27,29 +32,38 @@ public class Fijos extends Empleados implements Serializable {
 	}
 	
 	public Fijos() {
-		
+	}
+	
+	public Fijos(Empleados empleados) {
+		this.empleados = empleados;
 	}
 
-	public Fijos(String dni, int salarioBase, int trienios, float sueldo) {
-		super();
-		this.dni = dni;
+	public Fijos(Empleados empleados, String dni, int salarioBase, int trienios, float sueldo) {
+		this.empleados = empleados;
 		this.salarioBase = salarioBase;
 		this.trienios = trienios;
 		this.sueldo = sueldo;
 	}
 
+	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "empleado"))
 	@Id
-	@Column(name="DNI")
-	//Revisar en clase
-	//Primera opcion -> sin poner nada
-	//Segunda opcion
-	@OneToOne(mappedBy = "dni")
+	@GeneratedValue(generator = "generator")
 	public String getDni() {
 		return dni;
 	}
 
 	public void setDni(String dni) {
 		this.dni = dni;
+	}
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	public Empleados getEmpleados() {
+		return empleados;
+	}
+
+	public void setEmpleados(Empleados empleados) {
+		this.empleados = empleados;
 	}
 
 	@Column(name="SALARIOBASE")

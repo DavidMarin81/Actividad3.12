@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -13,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="EMPRESA")
+@Table(name="EMPRESA", catalog = "empresa_anotaciones")
 public class Empresa implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -70,8 +72,7 @@ public class Empresa implements Serializable{
 		this.telefono = telefono;
 	}
 
-	@Column(name="EMPS")
-	//@OneToMany(fetch = FetchType.LAZY, mappedBy= "cif")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy= "empresa")
 	public Set<Empleados> getEmpleados() {
 		return empleados;
 	}
