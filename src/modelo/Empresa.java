@@ -27,12 +27,11 @@ public class Empresa implements Serializable{
 		
 	}
 
-	public Empresa(String cif, String nombre, String direccion, String telefono, Set<Empleados> empleados) {
+	public Empresa(String cif, String nombre, String direccion, String telefono) {
 		this.cif = cif;
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		this.empleados = empleados;
 	}
 
 	@Id

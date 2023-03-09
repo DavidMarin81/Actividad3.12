@@ -40,14 +40,11 @@ public abstract class Empleados implements Serializable{
 		this.dni = dni;
 	}
 
-	public Empleados(String dni, Empresa empresa, String nombre, String telefono, float porcentaRetencion, Fijos fijos, Temporales temporales) {
+	public Empleados(String dni, String nombre, String telefono, float porcentaRetencion) {
 		this.dni = dni;
-		this.empresa = empresa;
 		this.nombre = nombre;
 		this.telefono = telefono;
 		this.porcentaRetencion = porcentaRetencion;
-		this.fijos = fijos;
-		this.temporales = temporales;
 	}
 
 	@Id
